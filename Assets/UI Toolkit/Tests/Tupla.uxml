@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Backdrop" style="background-color: rgba(0, 0, 0, 255); height: 100%; align-items: stretch; width: 15%; opacity: 0.93; justify-content: space-around; transform-origin: center; right: auto; left: 75%; margin-right: 0;">
+        <ui:VisualElement name="Buttons" style="padding-bottom: 20px; justify-content: center; align-items: center;">
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="Start" style="margin-bottom: 10px; width: 50%; align-items: stretch;" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="Start" style="margin-bottom: 10px; width: 50%; align-items: stretch;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
