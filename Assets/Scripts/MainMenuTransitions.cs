@@ -14,7 +14,7 @@ public class MainMenuTransitions : MonoBehaviour
     public VisualElement mainMenuWrapper;
 
     private string buttonEntryAnimationStyle = "button-entry-animation";
-    private string menuButtonStyle = "menu-button";
+    private string menuButtonStyle = "menu-button-clickable";
     private string menuButtonTransitionStyle = "menu-button-transition";
 
     public void BackdropEntryTransition(VisualElement backdrop, VisualElement backdropEffect)
