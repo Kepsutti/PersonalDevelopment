@@ -58,33 +58,38 @@ public class MainMenuController : MonoBehaviour
 
     private void Initialize()
     {
-        backdrop.AddToClassList(hideElementStyle);
-        _backdropEffect.AddToClassList(hideElementStyle);
-        title.AddToClassList(hideElementStyle);
+        InitializeButtons();
+        InitializeBackdropAndTitle();
+        _ignoreButtonClicks = false;
+    }
 
+    private void InitializeButtons()
+    {
         VisualElement[] _buttonsArray = _mainMenuWrapper.Children().ToArray();
-        UIHelpers.ToggleStyleClassInArray(_buttonsArray, hideElementStyle);
+        UIHelpers.AddStyleClassToArray(_buttonsArray, hideElementStyle);
 
         VisualElement[] _settingsArray = _settingsWrapper.Children().ToArray();
         for (int i = 0; i < _settingsArray.Length; i++)
         {
             _settingsArray[i].style.translate = new Translate(0, Screen.height, 0);
         }
-        backdrop.style.scale = new Scale(new Vector2(0, 1));
-        backdrop.style.translate = new Translate(-Screen.width, 0, 0);
-        _backdropEffect.style.scale = new Scale(new Vector2(1, 1));
-        _backdropEffect.style.translate = new Translate(-Screen.width, 0, 0);
-        title.style.translate = new Translate(0, -25, 0);
 
-        _ignoreButtonClicks = false;
-        EnterMainMenu();
-    }
-
-    private void EnterMainMenu()
-    {
         _mainMenuWrapper.style.display = DisplayStyle.Flex;
         _settingsWrapper.style.display = DisplayStyle.Flex;
         _settingsWrapper.BringToFront();
+    }
+
+    private void InitializeBackdropAndTitle()
+    {
+        backdrop.AddToClassList(hideElementStyle);
+        _backdropEffect.AddToClassList(hideElementStyle);
+        title.AddToClassList(hideElementStyle);
+
+        backdrop.style.scale = new Scale(new Vector2(0, 1));
+        backdrop.style.translate = new Translate(-Screen.width, 0, 0);
+        _backdropEffect.style.scale = new Scale(Vector2.one);
+        _backdropEffect.style.translate = new Translate(-Screen.width, 0, 0);
+        title.style.translate = new Translate(0, -25, 0);
     }
 
     private IEnumerator Start()

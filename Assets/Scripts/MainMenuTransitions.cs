@@ -14,14 +14,14 @@ public class MainMenuTransitions : MonoBehaviour
     public VisualElement mainMenuWrapper;
 
     private string buttonEntryAnimationStyle = "button-entry-animation";
-    private string menuButtonStyle = "menu-button-clickable";
+    private string menuButtonClickableStyle = "menu-button-clickable";
     private string menuButtonTransitionStyle = "menu-button-transition";
 
     public void BackdropEntryTransition(VisualElement backdrop, VisualElement backdropEffect)
     {
         backdrop.ToggleInClassList(mainMenuController.hideElementStyle);
         backdrop.style.translate = new Translate(0, 0, 0);
-        backdrop.style.scale = new Scale(new Vector2(1, 1));
+        backdrop.style.scale = new Scale(Vector2.one);
 
         backdropEffect.ToggleInClassList(mainMenuController.hideElementStyle);
         backdropEffect.style.translate = new Translate(0, 0, 0);
@@ -45,13 +45,7 @@ public class MainMenuTransitions : MonoBehaviour
             Button targ = (Button)endEvent.target;
             if (targ.ClassListContains(buttonEntryAnimationStyle))
             {
-                targ.RemoveFromClassList(buttonEntryAnimationStyle);
-
-                if (targ == _finalTransitionElement)
-                {
-                    targ.parent.BringToFront();
-                    _finalTransitionElement = null;
-                }
+                ButtonEntryAnimationEndHandler(targ);
                 return;
             }
 
@@ -61,16 +55,32 @@ public class MainMenuTransitions : MonoBehaviour
             }
             if (targ.parent == _finalTransitionElement.parent)
             {
-                targ.ToggleInClassList(menuButtonTransitionStyle);
-                targ.ToggleInClassList(menuButtonStyle);
-
-                if (targ == _finalTransitionElement)
-                {
-                    targ.parent.BringToFront();
-                    _finalTransitionElement = null;
-                    mainMenuController.ToggleButtonIgnore(false);
-                }
+                ButtonTransitionEndHandler(targ);
             }
+        }
+    }
+
+    private void ButtonEntryAnimationEndHandler(Button button)
+    {
+        button.RemoveFromClassList(buttonEntryAnimationStyle);
+
+        if (button == _finalTransitionElement)
+        {
+            button.parent.BringToFront();
+            _finalTransitionElement = null;
+        }
+    }
+
+    private void ButtonTransitionEndHandler(Button button)
+    {
+        button.ToggleInClassList(menuButtonTransitionStyle);
+        button.ToggleInClassList(menuButtonClickableStyle);
+
+        if (button == _finalTransitionElement)
+        {
+            button.parent.BringToFront();
+            _finalTransitionElement = null;
+            mainMenuController.ToggleButtonIgnore(false);
         }
     }
 
@@ -113,7 +123,7 @@ public class MainMenuTransitions : MonoBehaviour
             for (int i = 0; i < _buttonsArray.Length; i++)
             {
                 _buttonsArray[i].ToggleInClassList(menuButtonTransitionStyle);
-                _buttonsArray[i].ToggleInClassList(menuButtonStyle);
+                _buttonsArray[i].ToggleInClassList(menuButtonClickableStyle);
             }
         }
         //First transitioning button's transition breaks without yield

@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public static class UIHelpers
 {
-    public static void ToggleStyleClassInArray(VisualElement[] array, string className)
+    public static void AddStyleClassToArray(VisualElement[] array, string className)
     {
         for (int i = 0; i < array.Length; i++)
         {
