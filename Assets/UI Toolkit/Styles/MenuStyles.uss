@@ -49,13 +49,13 @@
     transition-property: translate;
 }
 
-.pop-on-entry {
+.button-entry-animation {
     transition-property: scale;
     transition-duration: 1s;
     transition-timing-function: ease-out-elastic;
 }
 
-.animate-on-entry {
+.hide-element {
     opacity: 0;
     scale: 0 0;
 }

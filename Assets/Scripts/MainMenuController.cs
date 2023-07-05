@@ -25,6 +25,8 @@ public class MainMenuController : MonoBehaviour
 
     private bool _ignoreButtonClicks;
 
+    public string hideElementStyle = "hide-element";
+
     void Awake()
     {
         _uiDocument = GetComponent<UIDocument>();
@@ -56,12 +58,12 @@ public class MainMenuController : MonoBehaviour
 
     private void Initialize()
     {
-        backdrop.AddToClassList("animate-on-entry");
-        _backdropEffect.AddToClassList("animate-on-entry");
-        title.AddToClassList("animate-on-entry");
+        backdrop.AddToClassList(hideElementStyle);
+        _backdropEffect.AddToClassList(hideElementStyle);
+        title.AddToClassList(hideElementStyle);
 
         VisualElement[] _buttonsArray = _mainMenuWrapper.Children().ToArray();
-        UIHelpers.ToggleStyleClassInArray(_buttonsArray, "animate-on-entry");
+        UIHelpers.ToggleStyleClassInArray(_buttonsArray, hideElementStyle);
 
         VisualElement[] _settingsArray = _settingsWrapper.Children().ToArray();
         for (int i = 0; i < _settingsArray.Length; i++)

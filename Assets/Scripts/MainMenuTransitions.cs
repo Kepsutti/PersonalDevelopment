@@ -13,17 +13,21 @@ public class MainMenuTransitions : MonoBehaviour
 
     public VisualElement mainMenuWrapper;
 
+    private string buttonEntryAnimationStyle = "button-entry-animation";
+    private string menuButtonStyle = "menu-button";
+    private string menuButtonTransitionStyle = "menu-button-transition";
+
     public void BackdropEntryTransition(VisualElement backdrop, VisualElement backdropEffect)
     {
-        backdrop.ToggleInClassList("animate-on-entry");
+        backdrop.ToggleInClassList(mainMenuController.hideElementStyle);
         backdrop.style.translate = new Translate(0, 0, 0);
         backdrop.style.scale = new Scale(new Vector2(1, 1));
 
-        backdropEffect.ToggleInClassList("animate-on-entry");
+        backdropEffect.ToggleInClassList(mainMenuController.hideElementStyle);
         backdropEffect.style.translate = new Translate(0, 0, 0);
         backdropEffect.style.scale = new Scale(new Vector2(0, 1));
 
-        mainMenuController.title.ToggleInClassList("animate-on-entry");
+        mainMenuController.title.ToggleInClassList(mainMenuController.hideElementStyle);
         mainMenuController.title.style.translate = new Translate(0, 0, 0);
     }
 
@@ -39,9 +43,9 @@ public class MainMenuTransitions : MonoBehaviour
         if (endEvent.target is Button)
         {
             Button targ = (Button)endEvent.target;
-            if (targ.ClassListContains("pop-on-entry"))
+            if (targ.ClassListContains(buttonEntryAnimationStyle))
             {
-                targ.RemoveFromClassList("pop-on-entry");
+                targ.RemoveFromClassList(buttonEntryAnimationStyle);
 
                 if (targ == _finalTransitionElement)
                 {
@@ -57,8 +61,8 @@ public class MainMenuTransitions : MonoBehaviour
             }
             if (targ.parent == _finalTransitionElement.parent)
             {
-                targ.ToggleInClassList("menu-button-transition");
-                targ.ToggleInClassList("menu-button");
+                targ.ToggleInClassList(menuButtonTransitionStyle);
+                targ.ToggleInClassList(menuButtonStyle);
 
                 if (targ == _finalTransitionElement)
                 {
@@ -75,7 +79,7 @@ public class MainMenuTransitions : MonoBehaviour
         VisualElement[] _buttonsArray = mainMenuWrapper.Children().ToArray();
         _finalTransitionElement = _buttonsArray[_buttonsArray.Length - 1];
 
-        UIHelpers.ToggleStyleClassInArray(_buttonsArray, "animate-on-entry", 0.1f, this);
+        UIHelpers.ToggleStyleClassInArray(_buttonsArray, mainMenuController.hideElementStyle, 0.1f, this);
     }
 
     public IEnumerator ButtonsEntryAnimation()
@@ -85,7 +89,7 @@ public class MainMenuTransitions : MonoBehaviour
 
         for (int i = 0; i < _buttonsArray.Length; i++)
         {
-            _buttonsArray[i].ToggleInClassList("animate-on-entry");
+            _buttonsArray[i].ToggleInClassList(mainMenuController.hideElementStyle);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -108,8 +112,8 @@ public class MainMenuTransitions : MonoBehaviour
 
             for (int i = 0; i < _buttonsArray.Length; i++)
             {
-                _buttonsArray[i].ToggleInClassList("menu-button-transition");
-                _buttonsArray[i].ToggleInClassList("menu-button");
+                _buttonsArray[i].ToggleInClassList(menuButtonTransitionStyle);
+                _buttonsArray[i].ToggleInClassList(menuButtonStyle);
             }
         }
         //First transitioning button's transition breaks without yield
