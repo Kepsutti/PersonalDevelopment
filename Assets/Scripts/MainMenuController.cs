@@ -66,7 +66,7 @@ public class MainMenuController : MonoBehaviour
     private void InitializeButtons()
     {
         VisualElement[] _buttonsArray = _mainMenuWrapper.Children().ToArray();
-        UIHelpers.AddStyleClassToArray(_buttonsArray, hideElementStyle);
+        UIHelpers.ToggleStyleClassInArray(_buttonsArray, hideElementStyle);
 
         VisualElement[] _settingsArray = _settingsWrapper.Children().ToArray();
         for (int i = 0; i < _settingsArray.Length; i++)

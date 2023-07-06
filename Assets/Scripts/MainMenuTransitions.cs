@@ -36,8 +36,7 @@ public class MainMenuTransitions : MonoBehaviour
         if (endEvent.target == mainMenuController.backdrop && !_revealBackdropAnimationOnce)
         {
             _revealBackdropAnimationOnce = true;
-            StartCoroutine(ButtonsEntryAnimation());
-            //AnimateMenuButtons2();
+            ButtonsEntryAnimation();
         }
 
         if (endEvent.target is Button)
@@ -84,24 +83,12 @@ public class MainMenuTransitions : MonoBehaviour
         }
     }
 
-    public void AnimateMenuButtons2()
+    public void ButtonsEntryAnimation()
     {
         VisualElement[] _buttonsArray = mainMenuWrapper.Children().ToArray();
         _finalTransitionElement = _buttonsArray[_buttonsArray.Length - 1];
 
-        UIHelpers.ToggleStyleClassInArray(_buttonsArray, mainMenuController.hideElementStyle, 0.1f, this);
-    }
-
-    public IEnumerator ButtonsEntryAnimation()
-    {
-        VisualElement[] _buttonsArray = mainMenuWrapper.Children().ToArray();
-        _finalTransitionElement = _buttonsArray[_buttonsArray.Length - 1];
-
-        for (int i = 0; i < _buttonsArray.Length; i++)
-        {
-            _buttonsArray[i].ToggleInClassList(mainMenuController.hideElementStyle);
-            yield return new WaitForSeconds(0.1f);
-        }
+        StartCoroutine(UIHelpers.ToggleStyleClassInArray(_buttonsArray, mainMenuController.hideElementStyle, 0.1f));
     }
 
     public IEnumerator ButtonsMenuTransition(VisualElement buttonWrapper, bool revealButtons = false)
@@ -120,11 +107,8 @@ public class MainMenuTransitions : MonoBehaviour
         {
             mainMenuController.ToggleButtonIgnore(true);
 
-            for (int i = 0; i < _buttonsArray.Length; i++)
-            {
-                _buttonsArray[i].ToggleInClassList(menuButtonTransitionStyle);
-                _buttonsArray[i].ToggleInClassList(menuButtonClickableStyle);
-            }
+            UIHelpers.ToggleStyleClassInArray(_buttonsArray, menuButtonTransitionStyle);
+            UIHelpers.ToggleStyleClassInArray(_buttonsArray, menuButtonClickableStyle);
         }
         //First transitioning button's transition breaks without yield
         yield return 0;
