@@ -21,4 +21,21 @@ public static class UIHelpers
             yield return new WaitForSeconds(waitTime);
         }
     }
+
+    public static void ChangeTranslatePropertyInArray(VisualElement[] array, Translate newTranslate)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            array[i].style.translate = newTranslate;
+        }
+    }
+
+    public static IEnumerator ChangeTranslatePropertyInArray(VisualElement[] array, Translate newTranslate, float waitTime)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            array[i].style.translate = newTranslate;
+            yield return new WaitForSeconds(waitTime);
+        }
+    }
 }
