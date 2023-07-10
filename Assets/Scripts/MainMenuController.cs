@@ -8,6 +8,9 @@ using UnityEngine.UIElements;
 
 public class MainMenuController : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject _playButtonParticles;
+
     private MainMenuTransitions _transitionController;
     private UIDocument _uiDocument;
 
@@ -70,10 +73,6 @@ public class MainMenuController : MonoBehaviour
 
         VisualElement[] _settingsArray = _settingsWrapper.Children().ToArray();
         UIHelpers.ChangeTranslatePropertyInArray(_settingsArray, new Translate(0, Screen.height, 0));
-        /*for (int i = 0; i < _settingsArray.Length; i++)
-        {
-            _settingsArray[i].style.translate = new Translate(0, Screen.height, 0);
-        }*/
 
         _mainMenuWrapper.style.display = DisplayStyle.Flex;
         _settingsWrapper.style.display = DisplayStyle.Flex;

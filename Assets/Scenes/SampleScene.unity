@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776616e91f50e68419dde978578d76dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreButtonClicks: 0
-  revealAnimationOnce: 0
+  _playButtonParticles: {fileID: 0}
+  hideElementStyle: hide-element
 --- !u!114 &197114474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,8 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776616e91f50e68419dde978578d76dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreButtonClicks: 0
-  revealAnimationOnce: 0
+  _playButtonParticles: {fileID: 7824442789694320194, guid: ff98c4c106e1f9541a02b5746f2d6e5b, type: 3}
+  hideElementStyle: hide-element
 --- !u!114 &1647410300
 MonoBehaviour:
   m_ObjectHideFlags: 0
