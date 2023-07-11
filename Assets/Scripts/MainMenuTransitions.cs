@@ -17,6 +17,8 @@ public class MainMenuTransitions : MonoBehaviour
     private string buttonEntryAnimationStyle = "button-entry-animation";
     private string menuButtonClickableStyle = "menu-button-clickable";
     private string menuButtonTransitionStyle = "menu-button-transition";
+    private string startButtonClickedStyle = "start-button-clicked";
+    private string dropHideAnimationStyle = "drop-hide-animation";
 
     public void BackdropEntryTransition(VisualElement backdrop, VisualElement backdropEffect)
     {
@@ -92,6 +94,17 @@ public class MainMenuTransitions : MonoBehaviour
         StartCoroutine(UIHelpers.ToggleStyleClassInArray(_buttonsArray, mainMenuController.hideElementStyle, 0.1f));
     }
 
+    public void StartButtonClicked(Button startButton)
+    {
+        startButton.ToggleInClassList(menuButtonClickableStyle);
+        startButton.ToggleInClassList(startButtonClickedStyle);
+
+        VisualElement[] _buttonsArray = mainMenuWrapper.Children().ToArray();
+        _buttonsArray = _buttonsArray.Where(e => e != startButton).ToArray();
+        UIHelpers.ToggleStyleClassInArray(_buttonsArray, menuButtonClickableStyle);
+        UIHelpers.ToggleStyleClassInArray(_buttonsArray, dropHideAnimationStyle);
+    }
+
     public IEnumerator ButtonsMenuTransition(VisualElement buttonWrapper, bool revealButtons = false)
     {
         VisualElement[] _buttonsArray = buttonWrapper.Children().ToArray();
@@ -105,8 +118,6 @@ public class MainMenuTransitions : MonoBehaviour
         }
         else
         {
-            mainMenuController.ToggleButtonIgnore(true);
-
             UIHelpers.ToggleStyleClassInArray(_buttonsArray, menuButtonTransitionStyle);
             UIHelpers.ToggleStyleClassInArray(_buttonsArray, menuButtonClickableStyle);
             Array.Reverse(_buttonsArray);

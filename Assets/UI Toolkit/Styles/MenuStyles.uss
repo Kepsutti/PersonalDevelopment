@@ -16,7 +16,7 @@
     min-height: 10%;
 }
 
-.menu-button-clickable{
+.menu-button-clickable {
     transition-property: all;
     transition-duration: 0.2s;
 }
@@ -46,6 +46,19 @@
     transition-property: scale;
     transition-duration: 1s;
     transition-timing-function: ease-out-elastic;
+}
+
+.start-button-clicked {
+    scale: 2 2;
+    transition-duration: 1s;
+    transition-property: scale;
+}
+
+.drop-hide-animation {
+    opacity: 0;
+    translate: 0 40px;
+    transition-duration: 0.8s;
+    transition-property: translate, opacity;
 }
 
 .hide-element {

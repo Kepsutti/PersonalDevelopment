@@ -9,12 +9,12 @@ using UnityEngine.UIElements;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _playButtonParticles;
+    private GameObject _startButtonParticles;
 
     private MainMenuTransitions _transitionController;
     private UIDocument _uiDocument;
 
-    private Button _playButton;
+    private Button _startButton;
     private Button _settingsButton;
     private Button _exitButton;
     private Button _backButton;
@@ -37,14 +37,14 @@ public class MainMenuController : MonoBehaviour
         _backdropEffect = _uiDocument.rootVisualElement.Q<VisualElement>("BackdropEffect");
         _menuContent = _uiDocument.rootVisualElement.Q<VisualElement>("MenuContent");
         title = _uiDocument.rootVisualElement.Q<VisualElement>("Title");
-        _playButton = _menuContent.Q<Button>("PlayButton");
+        _startButton = _menuContent.Q<Button>("StartButton");
         _settingsButton = _menuContent.Q<Button>("SettingsButton");
         _exitButton = _menuContent.Q<Button>("ExitButton");
         _backButton = _menuContent.Q<Button>("BackButton");
         _mainMenuWrapper = _menuContent.Q<VisualElement>("Buttons");
         _settingsWrapper = _menuContent.Q<VisualElement>("Settings");
 
-        _playButton.clicked += OnClickedPlayButton;
+        _startButton.clicked += OnClickedStartButton;
         _settingsButton.clicked += OnClickedSettingsButton;
         _exitButton.clicked += OnClickedExitButton;
         _backButton.clicked += OnClickedBackButton;
@@ -104,12 +104,13 @@ public class MainMenuController : MonoBehaviour
         _transitionController.TransitionEndHandler(endEvent);
     }
 
-    private void OnClickedPlayButton()
+    private void OnClickedStartButton()
     {
         if (_ignoreButtonClicks)
             return;
 
-        Debug.Log("Clicked play");
+        ToggleButtonIgnore(true);
+        _transitionController.StartButtonClicked(_startButton);
         //SceneManager.LoadScene("Game");
     }
 
@@ -118,6 +119,7 @@ public class MainMenuController : MonoBehaviour
         if (_ignoreButtonClicks)
             return;
 
+        ToggleButtonIgnore(true);
         StartCoroutine(SettingsButtonCoroutineListener());
     }
 
