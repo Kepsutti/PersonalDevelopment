@@ -25,6 +25,7 @@ public class MainMenuController : MonoBehaviour
     public VisualElement backdrop;
     private VisualElement _backdropEffect;
     public VisualElement title;
+    private VisualElement _blackScreen;
 
     private bool _ignoreButtonClicks;
 
@@ -35,6 +36,7 @@ public class MainMenuController : MonoBehaviour
         _uiDocument = GetComponent<UIDocument>();
         backdrop = _uiDocument.rootVisualElement.Q<VisualElement>("Backdrop");
         _backdropEffect = _uiDocument.rootVisualElement.Q<VisualElement>("BackdropEffect");
+        _blackScreen = _uiDocument.rootVisualElement.Q<VisualElement>("BlackScreen");
         _menuContent = _uiDocument.rootVisualElement.Q<VisualElement>("MenuContent");
         title = _uiDocument.rootVisualElement.Q<VisualElement>("Title");
         _startButton = _menuContent.Q<Button>("StartButton");
@@ -81,9 +83,12 @@ public class MainMenuController : MonoBehaviour
 
     private void InitializeBackdropAndTitle()
     {
+        _blackScreen.style.display = DisplayStyle.Flex;
+
         backdrop.AddToClassList(hideElementStyle);
         _backdropEffect.AddToClassList(hideElementStyle);
         title.AddToClassList(hideElementStyle);
+        _blackScreen.AddToClassList(hideElementStyle);
 
         backdrop.style.scale = new Scale(new Vector2(0, 1));
         backdrop.style.translate = new Translate(-Screen.width, 0, 0);
@@ -110,7 +115,7 @@ public class MainMenuController : MonoBehaviour
             return;
 
         ToggleButtonIgnore(true);
-        _transitionController.StartButtonClicked(_startButton);
+        _transitionController.StartButtonClicked(_startButton, _blackScreen);
         //SceneManager.LoadScene("Game");
     }
 

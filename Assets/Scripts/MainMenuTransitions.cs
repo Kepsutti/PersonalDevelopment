@@ -94,7 +94,7 @@ public class MainMenuTransitions : MonoBehaviour
         StartCoroutine(UIHelpers.ToggleStyleClassInArray(_buttonsArray, mainMenuController.hideElementStyle, 0.1f));
     }
 
-    public void StartButtonClicked(Button startButton)
+    public void StartButtonClicked(Button startButton, VisualElement blackScreen)
     {
         startButton.ToggleInClassList(menuButtonClickableStyle);
         startButton.ToggleInClassList(startButtonClickedStyle);
@@ -103,6 +103,8 @@ public class MainMenuTransitions : MonoBehaviour
         _buttonsArray = _buttonsArray.Where(e => e != startButton).ToArray();
         UIHelpers.ToggleStyleClassInArray(_buttonsArray, menuButtonClickableStyle);
         UIHelpers.ToggleStyleClassInArray(_buttonsArray, dropHideAnimationStyle);
+
+        blackScreen.ToggleInClassList(mainMenuController.hideElementStyle);
     }
 
     public IEnumerator ButtonsMenuTransition(VisualElement buttonWrapper, bool revealButtons = false)
