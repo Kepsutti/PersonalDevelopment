@@ -65,6 +65,7 @@ public class MainMenuController : MonoBehaviour
     {
         InitializeButtons();
         InitializeBackdropAndTitle();
+        InitializeButtonText();
         _ignoreButtonClicks = false;
     }
 
@@ -83,6 +84,7 @@ public class MainMenuController : MonoBehaviour
 
     private void InitializeBackdropAndTitle()
     {
+        Debug.Log(Screen.height);
         _blackScreen.style.display = DisplayStyle.Flex;
 
         backdrop.AddToClassList(hideElementStyle);
@@ -95,6 +97,16 @@ public class MainMenuController : MonoBehaviour
         _backdropEffect.style.scale = new Scale(Vector2.one);
         _backdropEffect.style.translate = new Translate(-Screen.width, 0, 0);
         title.style.translate = new Translate(0, -25, 0);
+    }
+
+    private void InitializeButtonText()
+    {
+        //UI Toolkit does not support text size as percentage at the time of writing this, hence this function
+        List<VisualElement> result = _uiDocument.rootVisualElement.Query(className: "menu-button").ToList();
+        foreach (VisualElement element in result)
+        {
+            element.style.fontSize = Screen.height / 23;
+        }
     }
 
     private IEnumerator Start()
