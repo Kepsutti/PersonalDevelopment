@@ -84,7 +84,6 @@ public class MainMenuController : MonoBehaviour
 
     private void InitializeBackdropAndTitle()
     {
-        Debug.Log(Screen.height);
         _blackScreen.style.display = DisplayStyle.Flex;
 
         backdrop.AddToClassList(hideElementStyle);

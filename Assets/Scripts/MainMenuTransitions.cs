@@ -23,15 +23,15 @@ public class MainMenuTransitions : MonoBehaviour
     public void BackdropEntryTransition(VisualElement backdrop, VisualElement backdropEffect)
     {
         backdrop.ToggleInClassList(mainMenuController.hideElementStyle);
-        backdrop.style.translate = new Translate(0, 0, 0);
-        backdrop.style.scale = new Scale(Vector2.one);
+        backdrop.style.translate = StyleKeyword.Null;
+        backdrop.style.scale = StyleKeyword.Null;
 
         backdropEffect.ToggleInClassList(mainMenuController.hideElementStyle);
-        backdropEffect.style.translate = new Translate(0, 0, 0);
+        backdropEffect.style.translate = StyleKeyword.Null; ;
         backdropEffect.style.scale = new Scale(new Vector2(0, 1));
 
         mainMenuController.title.ToggleInClassList(mainMenuController.hideElementStyle);
-        mainMenuController.title.style.translate = new Translate(0, 0, 0);
+        mainMenuController.title.style.translate = StyleKeyword.Null;
     }
 
     public void TransitionEndHandler(TransitionEndEvent endEvent)

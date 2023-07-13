@@ -12,10 +12,10 @@
             <ui:Button text="Exit" name="ExitButton" class="menu-button menu-button-clickable button-entry-animation" />
         </ui:VisualElement>
         <ui:VisualElement name="Settings" style="flex-grow: 1; justify-content: flex-start; padding-bottom: 10%; display: none; padding-top: 20px; width: 30%; align-items: center; height: 65%; position: absolute; top: 40%;">
-            <ui:Button text="Setting 1" name="Setting1" class="menu-button menu-button-transition" style="translate: 0 0;" />
-            <ui:Button text="Setting 2" name="Setting2" class="menu-button menu-button-transition" style="translate: 0 0;" />
-            <ui:Button text="Setting 3" name="Setting3" class="menu-button menu-button-transition" style="translate: 0 0;" />
-            <ui:Button text="Back" name="BackButton" class="menu-button menu-button-transition" style="translate: 0 0;" />
+            <ui:Button text="Setting 1" name="Setting1" class="menu-button menu-button-transition" />
+            <ui:Button text="Setting 2" name="Setting2" class="menu-button menu-button-transition" />
+            <ui:Button text="Setting 3" name="Setting3" class="menu-button menu-button-transition" />
+            <ui:Button text="Back" name="BackButton" class="menu-button menu-button-transition" />
         </ui:VisualElement>
         <ui:VisualElement name="SettingsList" style="flex-grow: 1; justify-content: flex-start; padding-bottom: 10%; display: none; padding-top: 20px; width: 50%; align-items: center; height: 65%; position: absolute; top: 40%;">
             <ui:Button text="Setting 1" name="Setting1" class="menu-button-transition" style="translate: 0 0;" />
