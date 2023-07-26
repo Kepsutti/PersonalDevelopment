@@ -3,8 +3,10 @@ I'm starting this project with the initial goal of learning to use Unity's UI To
 
 ## Current state of the project
 This project is still very much in its infancy, only consisting of a main menu with some transition animations made entirely with UI Toolkit.
+At present I'm messing with ScrollViews and ListViews in the below roadmap's stage 2.
+
 My roadmap is as follows:
-1. Refactor and polish main menu
+1. ~~Refactor and polish main menu~~ (Good enough for now, will go back for actual settings and that extra polish eventually)
 2. Create a second menu which consists of a selection window for the simple games to come
 3. Create the first mini game
 4. Profit
