@@ -26,11 +26,7 @@ public class GameSelectionController : MonoBehaviour
         InitializeGameList();
         _nowScrolling = false;
 
-        VisualElement[] buttonArray = _scrollView.Children().ToArray();
-        foreach (VisualElement button in buttonArray)
-        {
-            (button as Button).clicked += () => ListButtonClicked(button);
-        }
+        InitializeButtons();
     }
 
     //****
@@ -67,6 +63,17 @@ public class GameSelectionController : MonoBehaviour
         _scrollView = _rootUI.Q<ScrollView>("GamesScrollView");
         _scrollViewElement = _scrollView.contentContainer.hierarchy.parent;
 
+    }
+
+    private void InitializeButtons()
+    {
+        List<VisualElement> buttonArray = _scrollView.Children().ToList();
+        UIHelpers.InitializeButtonTextSize(buttonArray, Screen.height / 12);
+
+        foreach (VisualElement button in buttonArray)
+        {
+            (button as Button).clicked += () => ListButtonClicked(button);
+        }
     }
 
     private void ListButtonClicked(VisualElement button)

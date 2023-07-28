@@ -5,6 +5,15 @@ using UnityEngine.UIElements;
 
 public static class UIHelpers
 {
+    public static void InitializeButtonTextSize(List<VisualElement> buttonList, float size)
+    {
+        //UI Toolkit does not support text size as percentage at the time of writing this, hence this function
+        foreach (VisualElement element in buttonList)
+        {
+            element.style.fontSize = size;
+        }
+    }
+
     public static void ToggleStyleClassInArray(VisualElement[] array, string className)
     {
         for (int i = 0; i < array.Length; i++)

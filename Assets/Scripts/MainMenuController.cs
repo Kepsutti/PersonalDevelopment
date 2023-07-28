@@ -101,11 +101,8 @@ public class MainMenuController : MonoBehaviour
     private void InitializeButtonText()
     {
         //UI Toolkit does not support text size as percentage at the time of writing this, hence this function
-        List<VisualElement> result = _uiDocument.rootVisualElement.Query(className: "menu-button").ToList();
-        foreach (VisualElement element in result)
-        {
-            element.style.fontSize = Screen.height / 23;
-        }
+        List<VisualElement> buttonList = _uiDocument.rootVisualElement.Query(className: "menu-button").ToList();
+        UIHelpers.InitializeButtonTextSize(buttonList, Screen.height / 23);
     }
 
     private IEnumerator Start()
