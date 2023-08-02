@@ -25,8 +25,9 @@ public class GameSelectionController : MonoBehaviour
     {
         InitializeGameList();
         _nowScrolling = false;
-
         InitializeButtons();
+
+        StartCoroutine(ScrollStartAnimation());
     }
 
     //****
@@ -67,17 +68,28 @@ public class GameSelectionController : MonoBehaviour
 
     private void InitializeButtons()
     {
-        List<VisualElement> buttonArray = _scrollView.Children().ToList();
-        UIHelpers.InitializeButtonTextSize(buttonArray, Screen.height / 12);
+        List<VisualElement> buttonList = _scrollView.Children().ToList();
+        UIHelpers.InitializeButtonTextSize(buttonList, Screen.height / 12);
 
-        foreach (VisualElement button in buttonArray)
+        foreach (VisualElement button in buttonList)
         {
             (button as Button).clicked += () => ListButtonClicked(button);
         }
     }
 
+    private IEnumerator ScrollStartAnimation()
+    {
+        yield return new WaitForEndOfFrame();
+        _scrollView.verticalScroller.value = -_scrollViewElement.layout.height;
+
+        yield return new WaitForSeconds(1);
+        ScrollToElement(_scrollView.Children().Last(), true);
+    }
+
     private void ListButtonClicked(VisualElement button)
     {
+        Debug.Log(_scrollView.scrollOffset);
+
         if (_nowScrolling)
             return;
 
@@ -97,9 +109,9 @@ public class GameSelectionController : MonoBehaviour
         _selectedGameButton = button;
     }
 
-    private void ScrollToElement(VisualElement element)
+    private void ScrollToElement(VisualElement element, bool isEntryScroll = false)
     {
-        ScrollToTargetValue(GetElementCenterValue(element) - 0.5f * _scrollViewElement.layout.height);
+        ScrollToTargetValue(GetElementCenterValue(element) - 0.5f * _scrollViewElement.layout.height, isEntryScroll);
     }
 
     private float GetElementCenterValue(VisualElement element)
@@ -107,11 +119,17 @@ public class GameSelectionController : MonoBehaviour
         return element.layout.center.y;
     }
 
-    private void ScrollToTargetValue(float target)
+    private void ScrollToTargetValue(float target, bool isEntryScroll)
     {
+        float snappingDuration = _snappingDuration;
+        if (isEntryScroll)
+        {
+            snappingDuration = 2f;
+        }
+
         SetNowScrolling(true);
         Sequence s = DOTween.Sequence();
-        s.Append(DOVirtual.Float(_scrollView.verticalScroller.value, target, _snappingDuration, v => _scrollView.verticalScroller.value = v))
+        s.Append(DOVirtual.Float(_scrollView.verticalScroller.value, target, snappingDuration, v => _scrollView.verticalScroller.value = v))
             .SetEase(Ease.InOutQuad)
             .OnComplete(() => SetNowScrolling(false));
     }
