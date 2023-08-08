@@ -88,14 +88,11 @@ public class GameSelectionController : MonoBehaviour
 
     private void ListButtonClicked(VisualElement button)
     {
-        Debug.Log(_scrollView.scrollOffset);
-
         if (_nowScrolling)
             return;
 
         if (_selectedGameButton != button)
         {
-            SetSelectedGameButton(button);
             ScrollToElement(button);
         }
         else
@@ -104,14 +101,15 @@ public class GameSelectionController : MonoBehaviour
         }
     }
 
+    private void ScrollToElement(VisualElement element, bool isEntryScroll = false)
+    {
+        SetSelectedGameButton(element);
+        ScrollToTargetValue(GetElementCenterValue(element) - 0.5f * _scrollViewElement.layout.height, isEntryScroll);
+    }
+
     private void SetSelectedGameButton(VisualElement button)
     {
         _selectedGameButton = button;
-    }
-
-    private void ScrollToElement(VisualElement element, bool isEntryScroll = false)
-    {
-        ScrollToTargetValue(GetElementCenterValue(element) - 0.5f * _scrollViewElement.layout.height, isEntryScroll);
     }
 
     private float GetElementCenterValue(VisualElement element)
