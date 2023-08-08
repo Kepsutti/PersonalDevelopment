@@ -17,6 +17,8 @@ public class GameSelectionController : MonoBehaviour
     private ScrollView _scrollView;
     private VisualElement _scrollViewElement;
     private float _snappingDuration = 0.4f;
+    private Button _upButton;
+    private Button _downButton;
 
     private bool _nowScrolling;
     private VisualElement _selectedGameButton;
@@ -25,7 +27,7 @@ public class GameSelectionController : MonoBehaviour
     {
         InitializeGameList();
         _nowScrolling = false;
-        InitializeButtons();
+        InitializeListButtons();
 
         StartCoroutine(ScrollStartAnimation());
     }
@@ -63,10 +65,30 @@ public class GameSelectionController : MonoBehaviour
         //****************** SCROLLVIEW ******************
         _scrollView = _rootUI.Q<ScrollView>("GamesScrollView");
         _scrollViewElement = _scrollView.contentContainer.hierarchy.parent;
+        _upButton = _rootUI.Q<Button>("UpButton");
+        _downButton = _rootUI.Q<Button>("DownButton");
 
+        _upButton.clicked += () => ArrowButtonClicked(true);
+        _downButton.clicked += () => ArrowButtonClicked();
     }
 
-    private void InitializeButtons()
+    private void ArrowButtonClicked(bool scrollingUp = false)
+    {
+        if (_nowScrolling)
+            return;
+
+        int currentSelectedIndex = _selectedGameButton.parent.IndexOf(_selectedGameButton);
+        if (scrollingUp && currentSelectedIndex > 0)
+        {
+            ScrollToElement(_scrollView.Children().ElementAt(currentSelectedIndex - 1));
+        }
+        else if (!scrollingUp && currentSelectedIndex < _selectedGameButton.parent.childCount -1)
+        {
+            ScrollToElement(_scrollView.Children().ElementAt(currentSelectedIndex + 1));
+        }
+    }
+
+    private void InitializeListButtons()
     {
         List<VisualElement> buttonList = _scrollView.Children().ToList();
         UIHelpers.InitializeButtonTextSize(buttonList, Screen.height / 12);
@@ -79,6 +101,8 @@ public class GameSelectionController : MonoBehaviour
 
     private IEnumerator ScrollStartAnimation()
     {
+        SetNowScrolling(true);
+
         yield return new WaitForEndOfFrame();
         _scrollView.verticalScroller.value = -_scrollViewElement.layout.height;
 
