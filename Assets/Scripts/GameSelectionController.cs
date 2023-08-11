@@ -19,6 +19,7 @@ public class GameSelectionController : MonoBehaviour
     private float _snappingDuration = 0.4f;
     private Button _upButton;
     private Button _downButton;
+    private VisualElement _arrowButtonsWrapper;
 
     private bool _nowScrolling;
     private VisualElement _selectedGameButton;
@@ -67,7 +68,10 @@ public class GameSelectionController : MonoBehaviour
         _scrollViewElement = _scrollView.contentContainer.hierarchy.parent;
         _upButton = _rootUI.Q<Button>("UpButton");
         _downButton = _rootUI.Q<Button>("DownButton");
+        _arrowButtonsWrapper = _upButton.parent;
+        _arrowButtonsWrapper.style.translate = new Translate(0, Screen.height, 0);
 
+        _arrowButtonsWrapper.AddToClassList("hide-element");
         _upButton.clicked += () => ArrowButtonClicked(true);
         _downButton.clicked += () => ArrowButtonClicked();
     }
@@ -80,12 +84,27 @@ public class GameSelectionController : MonoBehaviour
         int currentSelectedIndex = _selectedGameButton.parent.IndexOf(_selectedGameButton);
         if (scrollingUp && currentSelectedIndex > 0)
         {
+            ArrowButtonClickedAnimation(_upButton);
             ScrollToElement(_scrollView.Children().ElementAt(currentSelectedIndex - 1));
         }
         else if (!scrollingUp && currentSelectedIndex < _selectedGameButton.parent.childCount -1)
         {
+            ArrowButtonClickedAnimation(_downButton);
             ScrollToElement(_scrollView.Children().ElementAt(currentSelectedIndex + 1));
         }
+    }
+
+    private void ArrowButtonClickedAnimation(Button button)
+    {
+        Vector3 buttonStartPos = button.transform.position;
+        Vector3 buttonTweenPos = new Vector3(0, 20f, 0);
+
+        if (button == _upButton)
+        {
+            buttonTweenPos = buttonTweenPos * -1;
+        }
+
+        DOTween.To(() => button.transform.position, x => button.transform.position = x, buttonStartPos + buttonTweenPos, 0.1f).SetLoops(2, LoopType.Yoyo);
     }
 
     private void InitializeListButtons()
@@ -108,6 +127,10 @@ public class GameSelectionController : MonoBehaviour
 
         yield return new WaitForSeconds(1);
         ScrollToElement(_scrollView.Children().Last(), true);
+
+        yield return new WaitUntil(() => !_nowScrolling);
+        _arrowButtonsWrapper.ToggleInClassList("hide-element");
+        _arrowButtonsWrapper.style.translate = StyleKeyword.Null;
     }
 
     private void ListButtonClicked(VisualElement button)

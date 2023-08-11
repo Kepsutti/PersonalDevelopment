@@ -65,6 +65,7 @@
     <None Include="Assets\UI Toolkit\Tests\NewUSSFile.uss" />
     <None Include="Assets\UI Toolkit\UIDocs\MainMenu.uxml" />
     <None Include="Assets\UI Toolkit\Tests\Tupla.uxml" />
+    <None Include="Assets\UI Toolkit\Styles\GameSelectStyles.uss" />
     <None Include="Assets\UI Toolkit\UIDocs\GameSelectionMenu.uxml" />
     <None Include="Assets\UI Toolkit\UIDocs\GameSelectionEntry.uxml" />
     <None Include="Assets\UI Toolkit\Styles\MenuStyles.uss" />

@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/GameSelectStyles.uss?fileID=7433441132597879392&amp;guid=b7791ce480cda6e41b92056ee1f4bed2&amp;type=3#GameSelectStyles" />
     <ui:VisualElement name="GameCarousel" style="width: 55%; height: 100%; justify-content: center;">
         <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Unrestricted" name="GamesScrollView" style="height: 50%;">
             <ui:Button text="Coming soon 1" display-tooltip-when-elided="true" name="Game01" style="font-size: 45px;" />
@@ -18,9 +19,9 @@
         </ui:ScrollView>
         <ui:ListView name="GameList" style="height: 125px; display: none;" />
     </ui:VisualElement>
-    <ui:VisualElement name="ArrowButtons" style="align-items: flex-start; margin-left: 55%; position: absolute; height: 100%; justify-content: center;">
-        <ui:Button text="^" display-tooltip-when-elided="true" name="UpButton" style="font-size: 20px;" />
-        <ui:Button text="v" display-tooltip-when-elided="true" name="DownButton" style="font-size: 20px;" />
+    <ui:VisualElement name="ArrowButtons" style="align-items: flex-start; margin-left: 55%; position: absolute; height: 100%; justify-content: center; transition-property: translate; transition-duration: 0.5s; transition-timing-function: ease-out-cubic;">
+        <ui:Button text="^" display-tooltip-when-elided="true" name="UpButton" class="arrow-button" style="font-size: 20px;" />
+        <ui:Button text="v" display-tooltip-when-elided="true" name="DownButton" class="arrow-button" style="font-size: 20px;" />
     </ui:VisualElement>
     <ui:VisualElement name="SelectionBorder" picking-mode="Ignore" style="position: absolute; width: 55%; height: 100%; justify-content: center;">
         <ui:Label display-tooltip-when-elided="true" picking-mode="Ignore" style="border-left-color: rgb(255, 199, 0); border-right-color: rgb(255, 199, 0); border-top-color: rgb(255, 199, 0); border-bottom-color: rgb(255, 199, 0); border-left-width: 8px; border-right-width: 8px; border-top-width: 8px; border-bottom-width: 8px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; height: 16%;" />

@@ -1,0 +1,19 @@
+.arrow-button {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    transition-property: scale;
+    transition-duration: 0.1s;
+    font-size: 20px;
+}
+
+.arrow-button:hover {
+    scale: 1.2 1.2;
+    transition-property: scale;
+    transition-duration: 0.1s;
+}
+
+.hide-element {
+    opacity: 0;
+}
