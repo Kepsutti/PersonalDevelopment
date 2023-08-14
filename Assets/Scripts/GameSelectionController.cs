@@ -123,10 +123,11 @@ public class GameSelectionController : MonoBehaviour
         SetNowScrolling(true);
 
         yield return new WaitForEndOfFrame();
-        _scrollView.verticalScroller.value = -_scrollViewElement.layout.height;
+        _scrollView.verticalScroller.value = GetElementCenterValue(_scrollView.Children().Last()) - 0.5f * _scrollViewElement.layout.height;
+        _scrollView.verticalScroller.value += _scrollViewElement.layout.height;
 
         yield return new WaitForSeconds(1);
-        ScrollToElement(_scrollView.Children().Last(), true);
+        ScrollToElement(_scrollView.Children().First(), true);
 
         yield return new WaitUntil(() => !_nowScrolling);
         _arrowButtonsWrapper.ToggleInClassList("hide-element");
