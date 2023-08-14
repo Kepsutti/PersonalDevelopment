@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MainMenuTransitions : MonoBehaviour
@@ -60,6 +61,11 @@ public class MainMenuTransitions : MonoBehaviour
                 ButtonTransitionEndHandler(targ);
             }
         }
+
+        if (endEvent.target == mainMenuController.blackScreen)
+        {
+            StartCoroutine(SceneChangeHandler());
+        }
     }
 
     private void ButtonEntryAnimationEndHandler(Button button)
@@ -84,6 +90,12 @@ public class MainMenuTransitions : MonoBehaviour
             _finalTransitionElement = null;
             mainMenuController.ToggleButtonIgnore(false);
         }
+    }
+
+    private IEnumerator SceneChangeHandler()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(1);
     }
 
     public void ButtonsEntryAnimation()

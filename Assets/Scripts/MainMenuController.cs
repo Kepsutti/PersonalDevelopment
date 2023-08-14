@@ -25,7 +25,7 @@ public class MainMenuController : MonoBehaviour
     public VisualElement backdrop;
     private VisualElement _backdropEffect;
     public VisualElement title;
-    private VisualElement _blackScreen;
+    public VisualElement blackScreen;
 
     private bool _ignoreButtonClicks;
 
@@ -36,7 +36,7 @@ public class MainMenuController : MonoBehaviour
         _uiDocument = GetComponent<UIDocument>();
         backdrop = _uiDocument.rootVisualElement.Q<VisualElement>("Backdrop");
         _backdropEffect = _uiDocument.rootVisualElement.Q<VisualElement>("BackdropEffect");
-        _blackScreen = _uiDocument.rootVisualElement.Q<VisualElement>("BlackScreen");
+        blackScreen = _uiDocument.rootVisualElement.Q<VisualElement>("BlackScreen");
         _menuContent = _uiDocument.rootVisualElement.Q<VisualElement>("MenuContent");
         title = _uiDocument.rootVisualElement.Q<VisualElement>("Title");
         _startButton = _menuContent.Q<Button>("StartButton");
@@ -53,6 +53,7 @@ public class MainMenuController : MonoBehaviour
 
         backdrop.RegisterCallback<TransitionEndEvent>(TransitionEnd);
         _menuContent.RegisterCallback<TransitionEndEvent>(TransitionEnd);
+        blackScreen.RegisterCallback<TransitionEndEvent>(TransitionEnd);
 
         _transitionController = GetComponent<MainMenuTransitions>();
         _transitionController.mainMenuController = this;
@@ -84,12 +85,12 @@ public class MainMenuController : MonoBehaviour
 
     private void InitializeBackdropAndTitle()
     {
-        _blackScreen.style.display = DisplayStyle.Flex;
+        blackScreen.style.display = DisplayStyle.Flex;
 
         backdrop.AddToClassList(hideElementStyle);
         _backdropEffect.AddToClassList(hideElementStyle);
         title.AddToClassList(hideElementStyle);
-        _blackScreen.AddToClassList(hideElementStyle);
+        blackScreen.AddToClassList(hideElementStyle);
 
         backdrop.style.scale = new Scale(new Vector2(0, 1));
         backdrop.style.translate = new Translate(-Screen.width, 0, 0);
@@ -123,8 +124,7 @@ public class MainMenuController : MonoBehaviour
             return;
 
         ToggleButtonIgnore(true);
-        _transitionController.StartButtonClicked(_startButton, _blackScreen);
-        //SceneManager.LoadScene("Game");
+        _transitionController.StartButtonClicked(_startButton, blackScreen);
     }
 
     private void OnClickedSettingsButton()

@@ -23,14 +23,15 @@ public class GameSelectionController : MonoBehaviour
 
     private bool _nowScrolling;
     private VisualElement _selectedGameButton;
+    private VisualElement _blackScreen;
 
     private void Start()
     {
         InitializeGameList();
+        StartCoroutine(InitializeScroller());
+        StartCoroutine(BlackScreenFade());
         _nowScrolling = false;
         InitializeListButtons();
-
-        StartCoroutine(ScrollStartAnimation());
     }
 
     //****
@@ -107,6 +108,31 @@ public class GameSelectionController : MonoBehaviour
         DOTween.To(() => button.transform.position, x => button.transform.position = x, buttonStartPos + buttonTweenPos, 0.1f).SetLoops(2, LoopType.Yoyo);
     }
 
+    private IEnumerator InitializeScroller()
+    {
+        yield return 0;
+        _scrollView.verticalScroller.value = GetElementCenterValue(_scrollView.Children().Last()) - 0.5f * _scrollViewElement.layout.height;
+        _scrollView.verticalScroller.value += _scrollViewElement.layout.height;
+    }
+
+    private IEnumerator BlackScreenFade()
+    {
+        _blackScreen = _rootUI.Q<VisualElement>("BlackScreen");
+        _blackScreen.RegisterCallback<TransitionEndEvent>(TransitionEnd);
+        _blackScreen.style.display = DisplayStyle.Flex;
+        yield return 0;
+        _blackScreen.style.opacity = 0;
+    }
+
+    private void TransitionEnd(TransitionEndEvent endEvent)
+    {
+        if (endEvent.target == _blackScreen)
+        {
+            StartCoroutine(ScrollStartAnimation());
+            _blackScreen.style.display = DisplayStyle.None;
+        }
+    }
+
     private void InitializeListButtons()
     {
         List<VisualElement> buttonList = _scrollView.Children().ToList();
@@ -121,10 +147,6 @@ public class GameSelectionController : MonoBehaviour
     private IEnumerator ScrollStartAnimation()
     {
         SetNowScrolling(true);
-
-        yield return new WaitForEndOfFrame();
-        _scrollView.verticalScroller.value = GetElementCenterValue(_scrollView.Children().Last()) - 0.5f * _scrollViewElement.layout.height;
-        _scrollView.verticalScroller.value += _scrollViewElement.layout.height;
 
         yield return new WaitForSeconds(1);
         ScrollToElement(_scrollView.Children().First(), true);
