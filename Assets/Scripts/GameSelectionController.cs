@@ -11,7 +11,6 @@ public class GameSelectionController : MonoBehaviour
     private VisualTreeAsset _gameButtonTemplate;
 
     private VisualElement _rootUI;
-    private string _gameButtonText;
     private ListView _gameSelectionList;
 
     private ScrollView _scrollView;
@@ -75,6 +74,7 @@ public class GameSelectionController : MonoBehaviour
         _arrowButtonsWrapper.AddToClassList("hide-element");
         _upButton.clicked += () => ArrowButtonClicked(true);
         _downButton.clicked += () => ArrowButtonClicked();
+        _scrollView.RegisterCallback<WheelEvent>(e => { OnMouseWheel(e); e.StopPropagation(); }, TrickleDown.TrickleDown);
     }
 
     private void ArrowButtonClicked(bool scrollingUp = false)
@@ -92,6 +92,17 @@ public class GameSelectionController : MonoBehaviour
         {
             ArrowButtonClickedAnimation(_downButton);
             ScrollToElement(_scrollView.Children().ElementAt(currentSelectedIndex + 1));
+        }
+    }
+
+    private void OnMouseWheel(WheelEvent wheelEvent){
+        if (wheelEvent.delta.y > 0)
+        {
+            ArrowButtonClicked();
+        }
+        if (wheelEvent.delta.y < 0)
+        {
+            ArrowButtonClicked(true);
         }
     }
 
