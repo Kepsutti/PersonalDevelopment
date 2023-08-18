@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class GameSelectionController : MonoBehaviour
@@ -19,6 +20,7 @@ public class GameSelectionController : MonoBehaviour
     private Button _upButton;
     private Button _downButton;
     private VisualElement _arrowButtonsWrapper;
+    private Button _mainMenuButton;
 
     private bool _nowScrolling;
     private VisualElement _selectedGameButton;
@@ -28,7 +30,7 @@ public class GameSelectionController : MonoBehaviour
     {
         InitializeGameList();
         StartCoroutine(InitializeScroller());
-        StartCoroutine(BlackScreenFade());
+        InitializeBlackScreen();
         _nowScrolling = false;
         InitializeListButtons();
     }
@@ -70,10 +72,12 @@ public class GameSelectionController : MonoBehaviour
         _downButton = _rootUI.Q<Button>("DownButton");
         _arrowButtonsWrapper = _upButton.parent;
         _arrowButtonsWrapper.style.translate = new Translate(0, Screen.height, 0);
+        _mainMenuButton = _rootUI.Q<Button>("MainMenuButton");
 
         _arrowButtonsWrapper.AddToClassList("hide-element");
         _upButton.clicked += () => ArrowButtonClicked(true);
         _downButton.clicked += () => ArrowButtonClicked();
+        _mainMenuButton.clicked += () => ReturnToMainMenu();
         _scrollView.RegisterCallback<WheelEvent>(e => { OnMouseWheel(e); e.StopPropagation(); }, TrickleDown.TrickleDown);
     }
 
@@ -119,6 +123,25 @@ public class GameSelectionController : MonoBehaviour
         DOTween.To(() => button.transform.position, x => button.transform.position = x, buttonStartPos + buttonTweenPos, 0.1f).SetLoops(2, LoopType.Yoyo);
     }
 
+    private void ReturnToMainMenu()
+    {
+        StartCoroutine(BlackScreenFade(true));
+    }
+
+    private IEnumerator BlackScreenFade(bool fadeToBlack = false)
+    {
+        yield return 0;
+        if (fadeToBlack)
+        {
+            _blackScreen.style.display = DisplayStyle.Flex;
+            _blackScreen.style.opacity = StyleKeyword.Null;
+        }
+        else
+        {
+            _blackScreen.style.opacity = 0;
+        }
+    }
+
     private IEnumerator InitializeScroller()
     {
         yield return 0;
@@ -126,22 +149,31 @@ public class GameSelectionController : MonoBehaviour
         _scrollView.verticalScroller.value += _scrollViewElement.layout.height;
     }
 
-    private IEnumerator BlackScreenFade()
+    private void InitializeBlackScreen()
     {
         _blackScreen = _rootUI.Q<VisualElement>("BlackScreen");
         _blackScreen.RegisterCallback<TransitionEndEvent>(TransitionEnd);
         _blackScreen.style.display = DisplayStyle.Flex;
-        yield return 0;
-        _blackScreen.style.opacity = 0;
+        StartCoroutine(BlackScreenFade());
     }
 
     private void TransitionEnd(TransitionEndEvent endEvent)
     {
-        if (endEvent.target == _blackScreen)
+        if (endEvent.target == _blackScreen && _blackScreen.style.opacity == 0)
         {
             StartCoroutine(ScrollStartAnimation());
             _blackScreen.style.display = DisplayStyle.None;
         }
+        else if (endEvent.target == _blackScreen && _blackScreen.style.opacity == StyleKeyword.Null)
+        {
+            StartCoroutine(SceneChangeHandler());
+        }
+    }
+
+    private IEnumerator SceneChangeHandler()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(0);
     }
 
     private void InitializeListButtons()
