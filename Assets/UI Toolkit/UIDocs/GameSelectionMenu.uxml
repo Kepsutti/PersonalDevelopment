@@ -2,20 +2,14 @@
     <Style src="project://database/Assets/UI%20Toolkit/Styles/GameSelectStyles.uss?fileID=7433441132597879392&amp;guid=b7791ce480cda6e41b92056ee1f4bed2&amp;type=3#GameSelectStyles" />
     <ui:VisualElement name="GameCarousel" style="width: 45%; height: 100%; justify-content: center; margin-left: 5%;">
         <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" touch-scroll-type="Unrestricted" name="GamesScrollView" style="height: 60%; border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255);">
-            <ui:Button text="Coming soon 1" display-tooltip-when-elided="true" name="Game01" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 2" display-tooltip-when-elided="true" name="Game02" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 3" display-tooltip-when-elided="true" name="Game03" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 4" display-tooltip-when-elided="true" name="Game04" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 4" display-tooltip-when-elided="true" name="Game05" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 4" display-tooltip-when-elided="true" name="Game06" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 4" display-tooltip-when-elided="true" name="Game07" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 1" display-tooltip-when-elided="true" name="Game01" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 2" display-tooltip-when-elided="true" name="Game02" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 3" display-tooltip-when-elided="true" name="Game03" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 4" display-tooltip-when-elided="true" name="Game04" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 4" display-tooltip-when-elided="true" name="Game05" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 4" display-tooltip-when-elided="true" name="Game06" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
-            <ui:Button text="Coming soon 4" display-tooltip-when-elided="true" name="Game07" style="font-size: 45px; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px;" />
+            <ui:Button text="Coming soon 1" name="Game01" class="game-button" />
+            <ui:Button text="Coming soon 2" name="Game02" class="game-button" />
+            <ui:Button text="Coming soon 3" name="Game03" class="game-button" />
+            <ui:Button text="Coming soon 4" name="Game04" class="game-button" />
+            <ui:Button text="Coming soon 1" name="Game01" class="game-button" />
+            <ui:Button text="Coming soon 2" name="Game02" class="game-button" />
+            <ui:Button text="Coming soon 3" name="Game03" class="game-button" />
+            <ui:Button text="Coming soon 4" name="Game04" class="game-button" />
         </ui:ScrollView>
         <ui:ListView name="GameList" style="height: 125px; display: none;" />
     </ui:VisualElement>
