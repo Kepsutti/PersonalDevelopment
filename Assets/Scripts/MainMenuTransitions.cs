@@ -64,7 +64,7 @@ public class MainMenuTransitions : MonoBehaviour
 
         if (endEvent.target == mainMenuController.blackScreen)
         {
-            StartCoroutine(SceneChangeHandler());
+            StartCoroutine(SceneController.SceneChangeHandler(1, 1));
         }
     }
 
@@ -90,12 +90,6 @@ public class MainMenuTransitions : MonoBehaviour
             _finalTransitionElement = null;
             mainMenuController.ToggleButtonIgnore(false);
         }
-    }
-
-    private IEnumerator SceneChangeHandler()
-    {
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(1);
     }
 
     public void ButtonsEntryAnimation()

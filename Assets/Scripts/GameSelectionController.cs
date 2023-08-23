@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class GameSelectionController : MonoBehaviour
@@ -166,14 +165,8 @@ public class GameSelectionController : MonoBehaviour
         }
         else if (endEvent.target == _blackScreen && _blackScreen.style.opacity == StyleKeyword.Null)
         {
-            StartCoroutine(SceneChangeHandler());
+            StartCoroutine(SceneController.SceneChangeHandler(0, 1));
         }
-    }
-
-    private IEnumerator SceneChangeHandler()
-    {
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(0);
     }
 
     private void InitializeListButtons()
