@@ -209,6 +209,7 @@ public class GameSelectionController : MonoBehaviour
 
     private void ScrollToElement(VisualElement element, bool isEntryScroll = false)
     {
+        ScaleElement();
         SetSelectedGameButton(element);
         ScrollToTargetValue(GetElementCenterValue(element) - 0.5f * _scrollViewElement.layout.height, isEntryScroll);
     }
@@ -235,7 +236,28 @@ public class GameSelectionController : MonoBehaviour
         Sequence s = DOTween.Sequence();
         s.Append(DOVirtual.Float(_scrollView.verticalScroller.value, target, snappingDuration, v => _scrollView.verticalScroller.value = v))
             .SetEase(Ease.InOutQuad)
-            .OnComplete(() => SetNowScrolling(false));
+            .OnComplete(() =>
+            {
+                SetNowScrolling(false);
+                ScaleElement(true);
+            });
+    }
+
+    private void ScaleElement(bool scaleUp = false)
+    {
+        if (_selectedGameButton == null)
+            return;
+
+        VisualElement button = _selectedGameButton;
+        Vector2 newScale = new Vector2(1, 1);
+        Vector2 oldScale = new Vector2(0.9f, 0.9f);
+
+        if (!scaleUp)
+        {
+            (newScale, oldScale) = (oldScale, newScale);
+        }
+
+        DOTween.To(() => oldScale, x => button.style.scale = new Scale(x), newScale, 0.2f);
     }
 
     private void SetNowScrolling(bool value)
