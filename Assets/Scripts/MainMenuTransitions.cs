@@ -64,7 +64,7 @@ public class MainMenuTransitions : MonoBehaviour
 
         if (endEvent.target == mainMenuController.blackScreen)
         {
-            StartCoroutine(SceneController.SceneChangeHandler(1, 1));
+            StartCoroutine(SceneController.SceneChangeByID(1, 1));
         }
     }
 

@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -20,10 +21,13 @@ public class GameSelectionController : MonoBehaviour
     private Button _downButton;
     private VisualElement _arrowButtonsWrapper;
     private Button _mainMenuButton;
+    private Button _startGameButton;
 
     private bool _nowScrolling;
     private VisualElement _selectedGameButton;
     private VisualElement _blackScreen;
+
+    private string _sceneNameToLoad;
 
     private void Start()
     {
@@ -72,11 +76,13 @@ public class GameSelectionController : MonoBehaviour
         _arrowButtonsWrapper = _upButton.parent;
         _arrowButtonsWrapper.style.translate = new Translate(0, Screen.height, 0);
         _mainMenuButton = _rootUI.Q<Button>("MainMenuButton");
+        _startGameButton = _rootUI.Q<Button>("StartButton");
 
         _arrowButtonsWrapper.AddToClassList("hide-element");
         _upButton.clicked += () => ArrowButtonClicked(true);
         _downButton.clicked += () => ArrowButtonClicked();
         _mainMenuButton.clicked += () => ReturnToMainMenu();
+        _startGameButton.clicked += () => SceneController.SceneChangeByString(_sceneNameToLoad);
         _scrollView.RegisterCallback<WheelEvent>(e => { OnMouseWheel(e); e.StopPropagation(); }, TrickleDown.TrickleDown);
     }
 
@@ -165,7 +171,7 @@ public class GameSelectionController : MonoBehaviour
         }
         else if (endEvent.target == _blackScreen && _blackScreen.style.opacity == StyleKeyword.Null)
         {
-            StartCoroutine(SceneController.SceneChangeHandler(0, 1));
+            StartCoroutine(SceneController.SceneChangeByID(0, 1));
         }
     }
 
@@ -209,6 +215,7 @@ public class GameSelectionController : MonoBehaviour
 
     private void ScrollToElement(VisualElement element, bool isEntryScroll = false)
     {
+        UpdateInfoBoxContent(element);
         ScaleElement();
         SetSelectedGameButton(element);
         ScrollToTargetValue(GetElementCenterValue(element) - 0.5f * _scrollViewElement.layout.height, isEntryScroll);
@@ -263,5 +270,14 @@ public class GameSelectionController : MonoBehaviour
     private void SetNowScrolling(bool value)
     {
         _nowScrolling = value;
+    }
+
+    private void UpdateInfoBoxContent(VisualElement clickedButton)
+    {
+        //TODO:
+        // Update Info Text
+        // Update Info Image
+        // Animate info changes
+        _sceneNameToLoad = Regex.Replace((clickedButton as Button).text, @"\s", "");
     }
 }
