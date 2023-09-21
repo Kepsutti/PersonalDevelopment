@@ -21,6 +21,9 @@ public class GameSelectionController : MonoBehaviour
     private Button _downButton;
     private VisualElement _arrowButtonsWrapper;
     private Button _mainMenuButton;
+
+    private VisualElement _infoBoxContentWrapper;
+    private Label _infoText;
     private Button _startGameButton;
 
     private bool _nowScrolling;
@@ -29,6 +32,8 @@ public class GameSelectionController : MonoBehaviour
 
     private string _sceneNameToLoad;
 
+    public string hideElementStyle = "hide-element";
+
     private void Start()
     {
         InitializeGameList();
@@ -36,6 +41,7 @@ public class GameSelectionController : MonoBehaviour
         InitializeBlackScreen();
         _nowScrolling = false;
         InitializeListButtons();
+        InitializeInfoBox();
     }
 
     //****
@@ -76,7 +82,10 @@ public class GameSelectionController : MonoBehaviour
         _arrowButtonsWrapper = _upButton.parent;
         _arrowButtonsWrapper.style.translate = new Translate(0, Screen.height, 0);
         _mainMenuButton = _rootUI.Q<Button>("MainMenuButton");
+
+        _infoText = _rootUI.Q<Label>("InfoText");
         _startGameButton = _rootUI.Q<Button>("StartButton");
+        _infoBoxContentWrapper = _startGameButton.parent;
 
         _arrowButtonsWrapper.AddToClassList("hide-element");
         _upButton.clicked += () => ArrowButtonClicked(true);
@@ -186,6 +195,11 @@ public class GameSelectionController : MonoBehaviour
         }
     }
 
+    private void InitializeInfoBox()
+    {
+        //TODO start animations
+    }
+
     private IEnumerator ScrollStartAnimation()
     {
         SetNowScrolling(true);
@@ -275,9 +289,11 @@ public class GameSelectionController : MonoBehaviour
     private void UpdateInfoBoxContent(VisualElement clickedButton)
     {
         //TODO:
-        // Update Info Text
+        // Info Text from file
         // Update Info Image
         // Animate info changes
+        _infoText.text = (clickedButton as Button).text;
+        //_infoBoxContentWrapper.ToggleInClassList(hideElementStyle);
         _sceneNameToLoad = Regex.Replace((clickedButton as Button).text, @"\s", "");
     }
 }
