@@ -27,6 +27,7 @@ public class GameSelectionController : MonoBehaviour
     private Button _startGameButton;
 
     private bool _nowScrolling;
+    private bool _infoBoxIsTransitioning = false;
     private VisualElement _selectedGameButton;
     private VisualElement _blackScreen;
 
@@ -93,6 +94,12 @@ public class GameSelectionController : MonoBehaviour
         _mainMenuButton.clicked += () => ReturnToMainMenu();
         _startGameButton.clicked += () => SceneController.SceneChangeByString(_sceneNameToLoad);
         _scrollView.RegisterCallback<WheelEvent>(e => { OnMouseWheel(e); e.StopPropagation(); }, TrickleDown.TrickleDown);
+        _infoBoxContentWrapper.RegisterCallback<TransitionEndEvent>(OnCompleteInfoBixTransition);
+    }
+
+    private void OnCompleteInfoBixTransition(TransitionEndEvent evt)
+    {
+        _infoBoxIsTransitioning = false;
     }
 
     private void ArrowButtonClicked(bool scrollingUp = false)
@@ -229,7 +236,7 @@ public class GameSelectionController : MonoBehaviour
 
     private void ScrollToElement(VisualElement element, bool isEntryScroll = false)
     {
-        UpdateInfoBoxContent(element);
+        StartCoroutine(UpdateInfoBoxContent(element));
         ScaleElement();
         SetSelectedGameButton(element);
         ScrollToTargetValue(GetElementCenterValue(element) - 0.5f * _scrollViewElement.layout.height, isEntryScroll);
@@ -286,13 +293,17 @@ public class GameSelectionController : MonoBehaviour
         _nowScrolling = value;
     }
 
-    private void UpdateInfoBoxContent(VisualElement clickedButton)
+    private IEnumerator UpdateInfoBoxContent(VisualElement clickedButton)
     {
         //TODO:
         // Info Text from file
         // Update Info Image
-        // Animate info changes
+        // Animate info box size between transitions
+        _infoBoxContentWrapper.style.opacity = 0;
+        _infoBoxIsTransitioning = true;
+        yield return new WaitUntil(() => !_infoBoxIsTransitioning && !_nowScrolling);
         _infoText.text = (clickedButton as Button).text;
+        _infoBoxContentWrapper.style.opacity = StyleKeyword.Null;
         //_infoBoxContentWrapper.ToggleInClassList(hideElementStyle);
         _sceneNameToLoad = Regex.Replace((clickedButton as Button).text, @"\s", "");
     }
