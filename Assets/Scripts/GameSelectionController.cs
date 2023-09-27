@@ -92,7 +92,7 @@ public class GameSelectionController : MonoBehaviour
         _upButton.clicked += () => ArrowButtonClicked(true);
         _downButton.clicked += () => ArrowButtonClicked();
         _mainMenuButton.clicked += () => ReturnToMainMenu();
-        _startGameButton.clicked += () => SceneController.SceneChangeByString(_sceneNameToLoad);
+        _startGameButton.clicked += () => { if (!_nowScrolling) SceneController.SceneChangeByString(_sceneNameToLoad); };
         _scrollView.RegisterCallback<WheelEvent>(e => { OnMouseWheel(e); e.StopPropagation(); }, TrickleDown.TrickleDown);
         _infoBoxContentWrapper.RegisterCallback<TransitionEndEvent>(OnCompleteInfoBixTransition);
     }
