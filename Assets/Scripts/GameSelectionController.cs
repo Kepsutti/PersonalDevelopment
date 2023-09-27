@@ -87,8 +87,10 @@ public class GameSelectionController : MonoBehaviour
         _infoText = _rootUI.Q<Label>("InfoText");
         _startGameButton = _rootUI.Q<Button>("StartButton");
         _infoBoxContentWrapper = _startGameButton.parent;
+        _infoBoxContentWrapper.parent.style.translate = new Translate(Screen.width, 0, 0);
 
         _arrowButtonsWrapper.AddToClassList("hide-element");
+        _infoBoxContentWrapper.parent.AddToClassList("hide-element");
         _upButton.clicked += () => ArrowButtonClicked(true);
         _downButton.clicked += () => ArrowButtonClicked();
         _mainMenuButton.clicked += () => ReturnToMainMenu();
@@ -217,6 +219,8 @@ public class GameSelectionController : MonoBehaviour
         yield return new WaitUntil(() => !_nowScrolling);
         _arrowButtonsWrapper.ToggleInClassList("hide-element");
         _arrowButtonsWrapper.style.translate = StyleKeyword.Null;
+        _infoBoxContentWrapper.parent.ToggleInClassList("hide-element");
+        _infoBoxContentWrapper.parent.style.translate = StyleKeyword.Null;
     }
 
     private void ListButtonClicked(VisualElement button)
