@@ -28,6 +28,7 @@ public class GameSelectionController : MonoBehaviour
 
     private bool _nowScrolling;
     private bool _infoBoxIsTransitioning = false;
+    private float _savedInfoBoxSize;
     private VisualElement _selectedGameButton;
     private VisualElement _blackScreen;
 
@@ -96,12 +97,23 @@ public class GameSelectionController : MonoBehaviour
         _mainMenuButton.clicked += () => ReturnToMainMenu();
         _startGameButton.clicked += () => { if (!_nowScrolling) SceneController.SceneChangeByString(_sceneNameToLoad); };
         _scrollView.RegisterCallback<WheelEvent>(e => { OnMouseWheel(e); e.StopPropagation(); }, TrickleDown.TrickleDown);
-        _infoBoxContentWrapper.RegisterCallback<TransitionEndEvent>(OnCompleteInfoBixTransition);
+        _infoBoxContentWrapper.RegisterCallback<TransitionEndEvent>(OnCompleteInfoBoxTransition);
+        _infoText.RegisterCallback<GeometryChangedEvent>(OnInfoBoxSizeChanged);
     }
 
-    private void OnCompleteInfoBixTransition(TransitionEndEvent evt)
+    private void OnCompleteInfoBoxTransition(TransitionEndEvent evt)
     {
         _infoBoxIsTransitioning = false;
+    }
+
+    private void OnInfoBoxSizeChanged(GeometryChangedEvent evt)
+    {
+        float newHeight = _infoBoxContentWrapper.parent.resolvedStyle.height;
+        _infoBoxContentWrapper.parent.style.height = _savedInfoBoxSize;
+        Debug.Log("old: " + _savedInfoBoxSize);
+        Debug.Log("set new: " + _infoBoxContentWrapper.parent.resolvedStyle.height);
+        DOTween.To(() => _savedInfoBoxSize, x => _infoBoxContentWrapper.parent.style.height = x, newHeight, 0.3f)
+            .onComplete = () => { _infoBoxContentWrapper.parent.style.height = StyleKeyword.Null; _savedInfoBoxSize = newHeight; };
     }
 
     private void ArrowButtonClicked(bool scrollingUp = false)
@@ -302,13 +314,13 @@ public class GameSelectionController : MonoBehaviour
         //TODO:
         // Info Text from file
         // Update Info Image
-        // Animate info box size between transitions
         _infoBoxContentWrapper.style.opacity = 0;
         _infoBoxIsTransitioning = true;
         yield return new WaitUntil(() => !_infoBoxIsTransitioning && !_nowScrolling);
+        _sceneNameToLoad = Regex.Replace((clickedButton as Button).text, @"\s", "");
         _infoText.text = (clickedButton as Button).text;
         _infoBoxContentWrapper.style.opacity = StyleKeyword.Null;
-        //_infoBoxContentWrapper.ToggleInClassList(hideElementStyle);
-        _sceneNameToLoad = Regex.Replace((clickedButton as Button).text, @"\s", "");
+        //yield return 0;
+        _savedInfoBoxSize = _infoBoxContentWrapper.parent.resolvedStyle.height;
     }
 }
